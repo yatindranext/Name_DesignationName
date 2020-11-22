@@ -1,0 +1,86 @@
+﻿@using DuckTaleITTest.Models
+@model IEnumerable<Student>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<br />
+<br />
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <p>
+        @Html.TextBox("NameSearch","", new  {@class = "form-control" })
+
+        @Html.DropDownList("CatSearch", new List<SelectListItem> {
+        new SelectListItem { Text = "Name", Value = "Name"},
+        new SelectListItem { Text = "Class", Value = "Class"},
+         new SelectListItem { Text = "Subject", Value = "Subject"}
+             })
+
+        <input type="submit" class="btn" value="Filter By" />
+    </p>
+}
+
+<p style="text-align:right">
+    @Html.ActionLink("Add Student", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Std_Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Std_FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Std_LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Std_Class)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="3" style="color:red" align="center">
+                    No Data
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Std_Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Std_FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Std_LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Std_Class)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Std_Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Std_Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Std_Id })
+                    </td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+</table>
